@@ -59,12 +59,6 @@ struct ContentView: View {
                 } label: {
                     Label("Show credit", systemImage: "person.bubble")
                 }
-
-                Button {
-                    print("Add tapped")
-                } label: {
-                    Label("Add book", systemImage: "plus")
-                }
             }
 //            .alert(
 //                "Random Book",
