@@ -135,8 +135,8 @@ struct CustomAlertView<T: Hashable, M: View>: View {
     func dismiss() {
         withAnimation(.easeInOut(duration: animationDuration)) {
             isAnimating = false
-            isPresented = false
         }
+        isPresented = false
     }
 
     func show() {
@@ -174,21 +174,19 @@ struct CustomAlertPreview: View {
     @State private var test = "Some Value"
 
     var body: some View {
-        ZStack {
+        VStack {
             Button("Show Alert") {
                 isPresented = true
             }
-            if isPresented {
-                CustomAlertView(
-                    "Alert Title",
-                    $isPresented,
-                    presenting: test,
-                    actionText: "Yes, Done"
-                ) { value in
-                    // Action...
-                } message: { value in
-                    Text("Showing alert for \(value)… And adding a long text for preview.")
-                }
+            .customAlert(
+                "Alert Title",
+                isPresented: $isPresented,
+                presenting: test,
+                actionText: "Yes, Done"
+            ) { value in
+                // Action...
+            } message: { value in
+                Text("Showing alert for \(value)… And adding a long text for preview.")
             }
         }
     }
