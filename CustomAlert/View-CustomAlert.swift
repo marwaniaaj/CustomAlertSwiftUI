@@ -11,9 +11,9 @@ extension View {
     /// Presents an alert with a message when a given condition is true, using a localized string key for a title.
     /// - Parameters:
     ///   - titleKey: The key for the localized string that describes the title of the alert.
-    ///   - isPresented: A binding to a Boolean value that determines whether to present the alert. When the user presses or taps one of the alert’s actions, the system sets this value to false and dismisses.
-    ///   - data: An optional source of truth for the alert. The system passes the contents to the modifier’s closures. You use this data to populate the fields of an alert that you create that the system displays to the user.
-    ///   - actionText: The alert's action's button text.
+    ///   - isPresented: A binding to a Boolean value that determines whether to present the alert.
+    ///   - data: An optional binding of generic type T value, this data will populate the fields of an alert that will be displayed to the user.
+    ///   - actionText: The key for the localized string that describes the text of alert's action button.
     ///   - action: The alert’s action given the currently available data.
     ///   - message: A ViewBuilder returning the message for the alert given the currently available data.
     func customAlert<M, T: Hashable>(
@@ -47,8 +47,8 @@ extension View {
     /// Presents an alert with a message when a given condition is true, using a localized string key for a title.
     /// - Parameters:
     ///   - titleKey: The key for the localized string that describes the title of the alert.
-    ///   - isPresented: A binding to a Boolean value that determines whether to present the alert. When the user presses or taps one of the alert’s actions, the system sets this value to false and dismisses.
-    ///   - actionText: Action's button text.
+    ///   - isPresented: A binding to a Boolean value that determines whether to present the alert.
+    ///   - actionText: The key for the localized string that describes the text of alert's action button.
     ///   - action: Returning the alert’s actions.
     ///   - message: A ViewBuilder returning the message for the alert.
     func customAlert<M>(
