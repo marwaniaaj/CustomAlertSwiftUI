@@ -20,7 +20,7 @@ extension View {
         _ titleKey: LocalizedStringKey,
         isPresented: Binding<Bool>,
         presenting data: T?,
-        actionText: String,
+        actionText: LocalizedStringKey,
         action: @escaping (T) -> (),
         @ViewBuilder message: @escaping (T) -> M
     ) -> some View where M: View {
@@ -29,7 +29,7 @@ extension View {
                 titleKey,
                 isPresented,
                 presenting: data,
-                actionText: actionText,
+                actionTextKey: actionText,
                 action: action,
                 message: message
             )
@@ -54,7 +54,7 @@ extension View {
     func customAlert<M>(
         _ titleKey: LocalizedStringKey,
         isPresented: Binding<Bool>,
-        actionText: String,
+        actionText: LocalizedStringKey,
         action: @escaping () -> (),
         @ViewBuilder message: @escaping () -> M
     ) -> some View where M: View {
@@ -62,7 +62,7 @@ extension View {
             CustomAlertView(
                 titleKey,
                 isPresented,
-                actionText: actionText,
+                actionTextKey: actionText,
                 action: action,
                 message: message
             )

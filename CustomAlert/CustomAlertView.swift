@@ -30,12 +30,12 @@ struct CustomAlertView<T: Hashable, M: View>: View {
         _ titleKey: LocalizedStringKey,
         _ isPresented: Binding<Bool>,
         presenting data: T?,
-        actionText: String,
+        actionTextKey: LocalizedStringKey,
         action: @escaping (T) -> (),
         @ViewBuilder message: @escaping (T) -> M
     ) {
         _titleKey = State(wrappedValue: titleKey)
-        _actionTextKey = State(wrappedValue: LocalizedStringKey(actionText))
+        _actionTextKey = State(wrappedValue: actionTextKey)
         _isPresented = isPresented
 
         self.data = data
@@ -50,6 +50,7 @@ struct CustomAlertView<T: Hashable, M: View>: View {
             Color.gray
                 .ignoresSafeArea()
                 .opacity(isPresented ? 0.6 : 0)
+                .zIndex(1)
 
             if isAnimating {
                 VStack {
@@ -85,10 +86,11 @@ struct CustomAlertView<T: Hashable, M: View>: View {
                     .cornerRadius(35)
                 }
                 .padding()
+                .transition(.slide)
+                .zIndex(2)
             }
         }
         .ignoresSafeArea()
-        .zIndex(.greatestFiniteMagnitude)
         .onAppear {
             show()
         }
@@ -133,10 +135,20 @@ struct CustomAlertView<T: Hashable, M: View>: View {
     }
 
     func dismiss() {
-        withAnimation(.easeInOut(duration: animationDuration)) {
-            isAnimating = false
+        if #available(iOS 17.0, *) {
+            withAnimation(.easeInOut(duration: animationDuration)) {
+                isAnimating = false
+            } completion: {
+                isPresented = false
+            }
+        } else {
+            withAnimation(.easeInOut(duration: animationDuration)) {
+                isAnimating = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                isPresented = false
+            }
         }
-        isPresented = false
     }
 
     func show() {
@@ -152,12 +164,12 @@ extension CustomAlertView where T == Never {
     init(
         _ titleKey: LocalizedStringKey,
         _ isPresented: Binding<Bool>,
-        actionText: String,
+        actionTextKey: LocalizedStringKey,
         action: @escaping () -> (),
         @ViewBuilder message: @escaping () -> M
     ) where T == Never {
         _titleKey = State(wrappedValue: titleKey)
-        _actionTextKey = State(wrappedValue: LocalizedStringKey(actionText))
+        _actionTextKey = State(wrappedValue: actionTextKey)
         _isPresented = isPresented
 
         self.data = nil
@@ -193,5 +205,7 @@ struct CustomAlertPreview: View {
 }
 
 #Preview {
-    CustomAlertPreview()
+    VStack {
+        CustomAlertPreview()
+    }
 }

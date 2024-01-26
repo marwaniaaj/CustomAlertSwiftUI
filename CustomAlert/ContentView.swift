@@ -90,7 +90,6 @@ struct ContentView: View {
             } message: {
                 Text("This custom alert tutorial was implemented by **Marwa**.")
             }
-
         }
     }
 }
