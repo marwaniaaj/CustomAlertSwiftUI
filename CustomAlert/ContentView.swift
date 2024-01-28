@@ -24,7 +24,9 @@ struct ContentView: View {
 
     @State private var randomBook: Book?
     @State private var selectedBook: Book?
+
     @State private var showAlert = false
+    @State private var showCreditAlert = false
 
     var body: some View {
         NavigationStack {
@@ -53,9 +55,9 @@ struct ContentView: View {
             .padding()
             .toolbar {
                 Button {
-                    print("Add tapped")
+                    showCreditAlert = true
                 } label: {
-                    Label("Add book", systemImage: "plus")
+                    Label("Show credit", systemImage: "person.bubble")
                 }
             }
             .alert(
@@ -68,6 +70,14 @@ struct ContentView: View {
                 }
             } message: { book in
                 Text("You have selected \(book.title) by \(book.author)")
+            }
+            .alert(
+                "Credits",
+                isPresented: $showCreditAlert
+            ) {
+                Button("OK") {}
+            } message: {
+                Text("This custom alert tutorial was implemented by **Marwa**.")
             }
         }
     }
