@@ -36,11 +36,13 @@ extension View {
             .presentationBackground(.clear)
         }
         .transaction { transaction in
-            // disable the default FullScreenCover animation
-            transaction.disablesAnimations = true
+            if isPresented.wrappedValue {
+                // disable the default FullScreenCover animation
+                transaction.disablesAnimations = true
 
-            // add custom animation for presenting and dismissing the FullScreenCover
-            transaction.animation = .linear(duration: 0.1)
+                // add custom animation for presenting and dismissing the FullScreenCover
+                transaction.animation = .linear(duration: 0.1)
+            }
         }
     }
 
@@ -69,11 +71,13 @@ extension View {
             .presentationBackground(.clear)
         }
         .transaction { transaction in
-            // disable the default FullScreenCover animation
-            transaction.disablesAnimations = true
+            if isPresented.wrappedValue {
+                // disable the default FullScreenCover animation
+                transaction.disablesAnimations = true
 
-            // add custom animation for presenting and dismissing the FullScreenCover
-            transaction.animation = .linear(duration: 0.1)
+                // add custom animation for presenting and dismissing the FullScreenCover
+                transaction.animation = .linear(duration: 0.1)
+            }
         }
     }
 }
